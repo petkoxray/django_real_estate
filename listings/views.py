@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 
+from contacts.forms import ContactForm
 from listings.choices import state_choices, bedroom_choices, price_choices
 from listings.models import Listing
 
@@ -18,9 +19,11 @@ def index(request):
 
 def listing(request, listing_slug):
     listing = get_object_or_404(Listing, slug=listing_slug)
+    form = ContactForm(initial={'listing': listing.id})
 
     return render(request, 'listings/listing.html', {
-        'listing': listing
+        'listing': listing,
+        'form': form
     })
 
 
