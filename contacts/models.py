@@ -12,5 +12,8 @@ class Contact(models.Model):
     message = models.TextField(blank=True)
     contact_date = models.DateTimeField(default=datetime.now, blank=True)
 
+    class Meta:
+        unique_together = ('user', 'listing')
+
     def __str__(self):
         return self.user.username

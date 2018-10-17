@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
 from accounts.forms import UserRegisterForm
+from contacts.models import Contact
 
 
 def register(request):
@@ -20,4 +21,8 @@ def register(request):
 
 
 def dashboard(request):
-    return None
+    user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+
+    return render(request, 'accounts/dashboard.html', {
+        'contacts': user_contacts
+    })

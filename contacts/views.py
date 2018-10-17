@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -14,7 +15,8 @@ def contact(request, listing_slug):
         form = ContactForm(request.POST, instance=contact)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            messages.success(request, 'Your request has been submitted, a realtor will get back to you soon')
+            return redirect('listing', listing_slug)
         else:
             return render(request, 'listings/listing.html', {
                 'listing': listing,
