@@ -4,6 +4,23 @@ from datetime import datetime
 from realtors.models import Realtor
 
 
+class ListingManager(models.Manager):
+    def search(self, **kwargs):
+        queryset_list = self.get_queryset().order_by('-list_date')
+        if kwargs['keywords']:
+            queryset_list = queryset_list.filter(description__icontains=kwargs['keywords'])
+        if kwargs['city']:
+            queryset_list = queryset_list.filter(city__iexact=kwargs['city'])
+        if kwargs['states']:
+            queryset_list = queryset_list.filter(state__iexact=kwargs['states'])
+        if kwargs['bedrooms']:
+            queryset_list = queryset_list.filter(bedrooms__lte=kwargs['bedrooms'])
+        if kwargs['prices']:
+            queryset_list = queryset_list.filter(price__lte=kwargs['prices'])
+
+        return queryset_list
+
+
 class Listing(models.Model):
     realtor = models.ForeignKey(Realtor, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=200)
@@ -28,6 +45,8 @@ class Listing(models.Model):
     photo_6 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     is_published = models.BooleanField(default=True)
     list_date = models.DateTimeField(default=datetime.now, blank=True)
+
+    objects = ListingManager()
 
     def __str__(self):
         return self.title
