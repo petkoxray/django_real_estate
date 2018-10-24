@@ -32,7 +32,7 @@ def search(request):
     if form.is_valid():
         listings = Listing.objects.search(**form.cleaned_data)
     else:
-        listings = Listing.objects.order_by('-list_date')
+        listings = Listing.objects.order_by('-list_date').filter(is_published=True)
 
     return render(request, 'listings/search.html', {
         'form': form,

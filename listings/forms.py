@@ -1,3 +1,4 @@
+from crispy_forms.helper import FormHelper
 from django import forms
 
 bedroom_choices = (
@@ -98,3 +99,8 @@ class SearchBox(forms.Form):
     bedrooms = forms.ChoiceField(choices=bedroom_choices, required=False)
     prices = forms.ChoiceField(choices=price_choices, required=False)
     states = forms.ChoiceField(choices=state_choices, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False

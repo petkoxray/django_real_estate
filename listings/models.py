@@ -6,7 +6,7 @@ from realtors.models import Realtor
 
 class ListingManager(models.Manager):
     def search(self, **kwargs):
-        queryset_list = self.get_queryset().order_by('-list_date')
+        queryset_list = self.get_queryset().order_by('-list_date').filter(is_published=True)
         if kwargs['keywords']:
             queryset_list = queryset_list.filter(description__icontains=kwargs['keywords'])
         if kwargs['city']:
