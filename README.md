@@ -2,16 +2,16 @@
 ***
 
 ### Functionalities
-- Authentication (regiser, login)
+- Authentication (register, login)
 - Users can make inquiries for listings
 - Search listings by keyword, city, state, bedrooms and price (Homepage & search page)
 - and much more...
-## Instalation
+## Installation
 
 #### Prerequisites
 
   - Python >= 3.6
-  - Postgress for database
+  - Postgres for database
 #### Steps
 
 ```sh
